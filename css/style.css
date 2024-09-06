@@ -1,21 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+
 body {
     font-family: Arial, sans-serif;
+    background-color: #E5E5E5; /* Light background color */
 }
 
+/* Header section */
 .header {
     background-image: url('../assets/images/Recette03.jpg');
+    background-size: cover;
     background-position: center;
     color: white;
     text-align: center;
-    padding: 100px 0;
+    padding: 80px 0; /* Slightly reduced padding */
+    position: relative;
 }
 
 .header h1 {
-    font-size: 2.5rem;
+    font-size: 2.2rem; /* Slightly reduced size */
 }
 
 .header p {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     margin-top: 10px;
 }
 
@@ -23,16 +29,121 @@ body {
     margin-top: 20px;
 }
 
+.btn-light {
+    background-color: #ffffff;
+    height: 60px;
+    width: 180px;
+    border-radius: 11px;
+}
+
+/* Recipe card styles */
+
+.recipes-container {
+    display: flex;
+    justify-content: center;
+}
+
 .recipe-card {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s;
+    background-color: #fff;
+    margin-bottom: 20px;
+    border-radius: 21px;
+    height: 100%; 
+    width: 95%;
 }
 
 .recipe-card:hover {
-    transform: translateY(-10px);
+    transform: translateY(-5px);
 }
 
 .recipe-card img {
-    max-height: 200px;
+    min-width: none;
+    height: 380px;
     object-fit: cover;
+    width: 100%;
+    border-top-left-radius: 21px;
+    border-top-right-radius: 21px;
+}
+
+.card-time {
+    position: absolute;
+    background-color: #FFD15B;
+    display: flex;
+    border-radius: 14px;
+    width: 65px;
+    height: 28px;
+    right: 20px;
+    top: 15px;
+    justify-content: center;
+}
+
+.card-title {
+    font-family: 'Anton', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.card-recipes {
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    color: #9b9b9b; 
+    margin-top: 20px;
+}
+
+.card-text {
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+/* Ingredients Section */
+.ingredients-section {
+    margin-top: 20px;
+}
+
+.ingredients-title {
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    color: #9b9b9b; 
+    margin-bottom: 10px;
+}
+
+.ingredients-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two equal columns for name and quantity */
+    gap: 5px; /* Adds space between rows */
+}
+
+.ingredient-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.ingredient-name {
+    font-weight: 500; /* Slightly bolder text for the ingredient name */
+}
+
+.ingredient-quantity {
+    color: #9b9b9b; /* Light gray for the quantity */
+}
+
+
+
+/* Adjust the margin between cards */
+@media (min-width: 768px) {
+    .recipes-container .col-md-3 {
+        max-width: 33.3333%;
+        margin-bottom: 15px; /* Reduced margin between rows */
+    }
+}
+
+@media (min-width: 1200px) {
+    .recipes-container .col-lg-3 {
+        max-width: 25%;
+        margin-bottom: 15px; /* Reduced margin between rows */
+    }
 }
