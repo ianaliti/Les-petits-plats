@@ -2,7 +2,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #E5E5E5; 
+    background-color: #E5E5E5;
 }
 
 /* Header section */
@@ -12,12 +12,12 @@ body {
     background-position: center;
     color: white;
     text-align: center;
-    padding: 80px 0; 
+    padding: 80px 0;
     position: relative;
 }
 
 .header h1 {
-    font-size: 2.2rem; 
+    font-size: 2.2rem;
 }
 
 .header p {
@@ -29,13 +29,13 @@ body {
 .search-bar {
     border-radius: 50px;
     padding-left: 20px;
-    height: 50px; /* Adjusts height */
+    height: 50px;
     font-size: 1.1rem;
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
 }
 
 .input-group .btn-dark {
-    background-color: #333; /* Matches the darker theme */
+    background-color: #333;
     border-radius: 50px;
     border: none;
     padding: 10px 15px;
@@ -45,15 +45,22 @@ body {
 }
 
 .input-group .form-control {
-    border-radius: 50px 0 0 50px; /* Rounded left side */
-    box-shadow: none; /* Removes default shadow */
+    border-radius: 50px 0 0 50px;
+    box-shadow: none;
 }
 
-/* Adjust icon size in button */
 .input-group .btn-dark i {
     font-size: 1.5rem;
 }
 
+/* Filter Section */
+.filters {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 20px 0;
+    flex-wrap: wrap; /* Responsive behavior */
+}
 
 .btn-custome {
     background-color: #ffffff;
@@ -62,11 +69,62 @@ body {
     border-radius: 11px;
 }
 
-/* Recipe card styles */
+.filters .dropdown {
+    margin-right: 20px;
+    margin-bottom: 10px; /* To handle responsive spacing */
+}
 
+.recipe-count {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Tag container (for all tags under the filters) */
+.tag-container-unified {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* Tag styles */
+.tag {
+    background-color: #FFD15B; /* Yellow background for tags */
+    color: black;
+    padding: 5px 10px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.tag span {
+    margin-right: 10px;
+}
+
+.tag button {
+    background: none;
+    border: none;
+    color: black;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.dropdown-menu {
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+.dropdown-menu li {
+    list-style: none;
+}
+
+/* Recipe card styles */
 .recipes-container {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 .recipe-card {
@@ -75,8 +133,9 @@ body {
     background-color: #fff;
     margin-bottom: 20px;
     border-radius: 21px;
-    height: 100%; 
+    height: 100%;
     width: 95%;
+    max-width: 350px;
 }
 
 .recipe-card:hover {
@@ -84,8 +143,7 @@ body {
 }
 
 .recipe-card img {
-    min-width: none;
-    height: 380px;
+    height: 250px;
     object-fit: cover;
     width: 100%;
     border-top-left-radius: 21px;
@@ -102,6 +160,7 @@ body {
     right: 20px;
     top: 15px;
     justify-content: center;
+    align-items: center;
 }
 
 .card-title {
@@ -115,7 +174,7 @@ body {
     font-size: 0.85rem;
     font-weight: bold;
     letter-spacing: 1px;
-    color: #9b9b9b; 
+    color: #9b9b9b;
     margin-top: 20px;
 }
 
@@ -134,14 +193,14 @@ body {
     font-size: 0.85rem;
     font-weight: bold;
     letter-spacing: 1px;
-    color: #9b9b9b; 
+    color: #9b9b9b;
     margin-bottom: 10px;
 }
 
 .ingredients-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Two equal columns for name and quantity */
-    gap: 5px; /* Adds space between rows */
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
 }
 
 .ingredient-item {
@@ -150,26 +209,24 @@ body {
 }
 
 .ingredient-name {
-    font-weight: 500; /* Slightly bolder text for the ingredient name */
+    font-weight: 500;
 }
 
 .ingredient-quantity {
-    color: #9b9b9b; /* Light gray for the quantity */
+    color: #9b9b9b;
 }
-
-
 
 /* Adjust the margin between cards */
 @media (min-width: 768px) {
     .recipes-container .col-md-3 {
         max-width: 33.3333%;
-        margin-bottom: 15px; /* Reduced margin between rows */
+        margin-bottom: 15px;
     }
 }
 
 @media (min-width: 1200px) {
     .recipes-container .col-lg-3 {
         max-width: 25%;
-        margin-bottom: 15px; /* Reduced margin between rows */
-    }
+        margin-bottom: 15px;
+}
 }
