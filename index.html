@@ -28,7 +28,7 @@
     </header>
 
     <!-- Filter Section -->
-    <div class="filters">
+    <div class="filters d-flex justify-content-between">
         <!-- Ingredients Dropdown -->
         <div class="dropdown dropdown-ingredients">
             <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Ingrédients</button>
@@ -36,9 +36,6 @@
                 <li><input type="text" class="form-control ingredient-search-input" aria-label="Search ingredients" placeholder="Écrivez un ingrédient..."></li>
                 <div class="ingredient-options"></div>
             </ul>
-            <div class="tag-container tag-container-ingredients">
-                <!-- Selected ingredient tags will appear here -->
-            </div>
         </div>
 
         <!-- Appliances Dropdown -->
@@ -48,9 +45,6 @@
                 <li><input type="text" class="form-control appliance-search-input" aria-label="Search appliances" placeholder="Écrivez un appareil..."></li>
                 <div class="appliance-options"></div>
             </ul>
-            <div class="tag-container tag-container-appliances">
-                <!-- Selected appliance tags will appear here -->
-            </div>
         </div>
 
         <!-- Utensils Dropdown -->
@@ -60,15 +54,16 @@
                 <li><input type="text" class="form-control utensil-search-input" aria-label="Search utensils" placeholder="Écrivez un ustensile..."></li>
                 <div class="utensil-options"></div>
             </ul>
-            <div class="tag-container tag-container-utensils">
-                <!-- Selected utensil tags will appear here -->
-            </div>
         </div>
 
+        <!-- Recipe Count -->
         <div class="recipe-count">
             <span class="recipe-count-number">0 recettes</span>
         </div>
     </div>
+
+    <!-- Tag Container (For all selected tags) -->
+    <div class="tag-container-unified d-flex flex-wrap mt-3"></div>
 
     <!-- Recipes Section -->
     <section class="row g-3 recipes-container">

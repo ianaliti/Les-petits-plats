@@ -31,13 +31,22 @@ class RecipeCardFactory {
 
 document.addEventListener('DOMContentLoaded', () => {
     const recipesContainer = document.querySelector('.recipes-container');
-    const tagContainer = document.querySelector('.tag-container');
-    const recipeCount = document.querySelector('.recipe-count-number');
+    const tagContainerUnified = document.querySelector('.tag-container-unified');  // Unified tag container
     const searchBar = document.querySelector('.search-bar');
+
+    const ingredientSearchInput = document.querySelector('.ingredient-search-input');
+    const applianceSearchInput = document.querySelector('.appliance-search-input');
+    const utensilSearchInput = document.querySelector('.utensil-search-input');
 
     const recipeCardFactory = new RecipeCardFactory();
     let selectedTags = [];
     let filteredRecipes = [...recipes]; // Initially, all recipes are available
+
+    // Ensure the tag container exists in the DOM
+    if (!tagContainerUnified) {
+        console.error('Tag container not found! Please ensure it exists in the DOM.');
+        return; // Stop execution if the element is not found
+    }
 
     // Function to search recipes based on the search input
     function searchRecipes(query) {
@@ -46,7 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 const matchTitle = recipe.name.toLowerCase().includes(query.toLowerCase());
                 const matchDescription = recipe.description.toLowerCase().includes(query.toLowerCase());
                 const matchIngredients = recipe.ingredients.some(ingredient => ingredient.ingredient.toLowerCase().includes(query.toLowerCase()));
-                
                 return matchTitle || matchDescription || matchIngredients;
             });
         } else {
@@ -68,45 +76,60 @@ document.addEventListener('DOMContentLoaded', () => {
             recipe.ustensils.forEach(ust => utensils.add(ust));
         });
 
-        updateFilterOptions('.dropdown-ingredients', Array.from(ingredients));
-        updateFilterOptions('.dropdown-appliances', Array.from(appliances));
-        updateFilterOptions('.dropdown-utensils', Array.from(utensils));
+        updateFilterOptions('.ingredient-options', Array.from(ingredients));
+        updateFilterOptions('.appliance-options', Array.from(appliances));
+        updateFilterOptions('.utensil-options', Array.from(utensils));
     }
 
-    // Function to update the dropdown filters (ingredients, appliances, utensils)
+    // Function to filter and update the dropdown options
+    function filterDropdownOptions(inputElement, selector, items) {
+        const searchValue = inputElement.value.toLowerCase();
+        const filteredItems = items.filter(item => item.toLowerCase().includes(searchValue));
+        updateFilterOptions(selector, filteredItems);
+    }
+
+    // Function to update the dropdown filter options
     function updateFilterOptions(selector, items) {
-        const dropdownMenu = document.querySelector(selector + ' .dropdown-menu');
-        dropdownMenu.innerHTML = '';
+        const dropdownContainer = document.querySelector(selector);
+        dropdownContainer.innerHTML = '';
 
         items.forEach(item => {
             const option = document.createElement('li');
             option.textContent = item;
             option.classList.add('dropdown-item');
-            option.addEventListener('click', () => addTag(item));
-            dropdownMenu.appendChild(option);
+            option.addEventListener('click', () => addTag(item, selector));
+            dropdownContainer.appendChild(option);
         });
     }
 
-    // Add tag under the filters
-    function addTag(tagText) {
+    // Add tag under the filters and remove it from the dropdown
+    function addTag(tagText, selector) {
         if (!selectedTags.includes(tagText)) {
             selectedTags.push(tagText);
+            
             const tagElement = document.createElement('div');
             tagElement.classList.add('tag');
             tagElement.innerHTML = `<span>${tagText}</span><button>x</button>`;
+            
+            tagElement.querySelector('button').addEventListener('click', () => removeTag(tagText, tagElement, selector));
 
-            tagElement.querySelector('button').addEventListener('click', () => removeTag(tagText, tagElement));
+            // Append the tag to the tag container
+            tagContainerUnified.appendChild(tagElement);  
 
-            tagContainer.appendChild(tagElement);
-
-            filterRecipesByTags(); // Update filtered recipes by tags
+            // Update dropdown options and recipes after adding the tag
+            filterRecipesByTags();
         }
     }
 
-    // Remove tag and update recipes
-    function removeTag(tagText, tagElement) {
+    // Remove tag and add it back to the dropdown options
+    function removeTag(tagText, tagElement, selector) {
         selectedTags = selectedTags.filter(tag => tag !== tagText);
-        tagContainer.removeChild(tagElement);
+        tagContainerUnified.removeChild(tagElement);  // Remove from the unified container
+
+        // Add the tag back to the dropdown options
+        const currentOptions = Array.from(document.querySelector(selector).children).map(li => li.textContent);
+        updateFilterOptions(selector, [...currentOptions, tagText]);
+
         filterRecipesByTags(); // Update filtered recipes by tags
     }
 
@@ -121,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        recipeCount.textContent = `${finalFilteredRecipes.length} recettes`;
+        document.querySelector('.recipe-count-number').textContent = `${finalFilteredRecipes.length} recettes`;
         updateUI(finalFilteredRecipes); // Display filtered recipes
     }
 
@@ -135,15 +158,26 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Initially display all recipes
-    updateUI(recipes);
-
     // Handle search bar input
     searchBar.addEventListener('input', (event) => {
         const query = event.target.value;
         searchRecipes(query);
     });
 
-    // Example: Update dropdown filters on page load
+    // Handle filtering within dropdown inputs
+    ingredientSearchInput.addEventListener('input', () => {
+        filterDropdownOptions(ingredientSearchInput, '.ingredient-options', Array.from(filteredRecipes.flatMap(r => r.ingredients.map(ing => ing.ingredient))));
+    });
+
+    applianceSearchInput.addEventListener('input', () => {
+        filterDropdownOptions(applianceSearchInput, '.appliance-options', Array.from(filteredRecipes.map(r => r.appliance)));
+    });
+
+    utensilSearchInput.addEventListener('input', () => {
+        filterDropdownOptions(utensilSearchInput, '.utensil-options', Array.from(filteredRecipes.flatMap(r => r.ustensils)));
+    });
+
+    // Initially display all recipes
+    updateUI(recipes);
     updateAdvancedFilters(recipes);
 });
