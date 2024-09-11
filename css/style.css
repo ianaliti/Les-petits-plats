@@ -5,6 +5,12 @@ body {
     background-color: #E5E5E5;
 }
 
+
+/* Main content with margin around filters and recipes */
+.main-content {
+    margin: 100px;
+}
+
 /* Header section */
 .header {
     background-image: url('../assets/images/Recette03.jpg');
@@ -58,7 +64,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 20px 0;
+    gap: 66px;
+    margin-bottom: 20px;
     flex-wrap: wrap; /* Responsive behavior */
 }
 
@@ -70,11 +77,11 @@ body {
 }
 
 .filters .dropdown {
-    margin-right: 20px;
     margin-bottom: 10px; /* To handle responsive spacing */
 }
 
 .recipe-count {
+    margin-left: auto;
     font-size: 1.5rem;
     font-weight: bold;
     color: #333;
@@ -83,6 +90,7 @@ body {
 /* Tag container (for all tags under the filters) */
 .tag-container-unified {
     margin-top: 10px;
+    margin-bottom: 30px;
     display: flex;
     flex-wrap: wrap;
     gap: 10px;

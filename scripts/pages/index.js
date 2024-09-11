@@ -1,7 +1,7 @@
 class RecipeCardFactory {
     createRecipeCard(recipe) {
         const recipeCard = document.createElement('div');
-        recipeCard.classList.add('d-flex', 'justify-content-center', 'col-sm-12', 'col-md-6', 'col-lg-4', 'mb-4');
+        recipeCard.classList.add('d-flex', 'col-sm-12', 'col-md-6', 'col-lg-4', 'mb-4');
 
         recipeCard.innerHTML = `
             <div class="card recipe-card">
@@ -69,17 +69,20 @@ document.addEventListener('DOMContentLoaded', () => {
         const ingredients = new Set();
         const appliances = new Set();
         const utensils = new Set();
-
+    
+        // Collect only the tags corresponding to the filtered recipes
         filteredRecipes.forEach(recipe => {
             recipe.ingredients.forEach(ing => ingredients.add(ing.ingredient));
             appliances.add(recipe.appliance);
             recipe.ustensils.forEach(ust => utensils.add(ust));
         });
-
+    
+        // Update dropdown options to show only matching tags for remaining recipes
         updateFilterOptions('.ingredient-options', Array.from(ingredients));
         updateFilterOptions('.appliance-options', Array.from(appliances));
         updateFilterOptions('.utensil-options', Array.from(utensils));
     }
+    
 
     // Function to filter and update the dropdown options
     function filterDropdownOptions(inputElement, selector, items) {
@@ -135,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Filter recipes based on selected tags
     function filterRecipesByTags() {
-        const finalFilteredRecipes = filteredRecipes.filter(recipe => {
+        filteredRecipes = recipes.filter(recipe => {
             return selectedTags.every(tag => {
                 const matchIngredient = recipe.ingredients.some(ingredient => ingredient.ingredient.toLowerCase().includes(tag.toLowerCase()));
                 const matchAppliance = recipe.appliance.toLowerCase().includes(tag.toLowerCase());
@@ -143,10 +146,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 return matchIngredient || matchAppliance || matchUtensil;
             });
         });
-
-        document.querySelector('.recipe-count-number').textContent = `${finalFilteredRecipes.length} recettes`;
-        updateUI(finalFilteredRecipes); // Display filtered recipes
+    
+        // After filtering recipes, update the available tags
+        updateAdvancedFilters(filteredRecipes);
+    
+        document.querySelector('.recipe-count-number').textContent = `${filteredRecipes.length} recettes`;
+        updateUI(filteredRecipes); // Display filtered recipes
     }
+    
 
     // Update the UI with the filtered recipes
     function updateUI(recipesToShow) {
