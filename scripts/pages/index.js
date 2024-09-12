@@ -40,7 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const recipeCardFactory = new RecipeCardFactory();
     let selectedTags = [];
-    let filteredRecipes = [...recipes]; // Initially, all recipes are available
+    let filteredRecipes = [...recipes]; 
+    document.querySelector('.recipe-count-number').textContent = `${filteredRecipes.length} recettes`;
 
     // Ensure the tag container exists in the DOM
     if (!tagContainerUnified) {
