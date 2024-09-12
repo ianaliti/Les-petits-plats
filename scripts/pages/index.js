@@ -69,20 +69,20 @@ document.addEventListener('DOMContentLoaded', () => {
         const ingredients = new Set();
         const appliances = new Set();
         const utensils = new Set();
-    
+
         // Collect only the tags corresponding to the filtered recipes
         filteredRecipes.forEach(recipe => {
             recipe.ingredients.forEach(ing => ingredients.add(ing.ingredient));
             appliances.add(recipe.appliance);
             recipe.ustensils.forEach(ust => utensils.add(ust));
         });
-    
+
         // Update dropdown options to show only matching tags for remaining recipes
         updateFilterOptions('.ingredient-options', Array.from(ingredients));
         updateFilterOptions('.appliance-options', Array.from(appliances));
         updateFilterOptions('.utensil-options', Array.from(utensils));
     }
-    
+
 
     // Function to filter and update the dropdown options
     function filterDropdownOptions(inputElement, selector, items) {
@@ -94,9 +94,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Function to update the dropdown filter options
     function updateFilterOptions(selector, items) {
         const dropdownContainer = document.querySelector(selector);
-        dropdownContainer.innerHTML = '';
-
-        items.forEach(item => {
+        dropdownContainer.innerHTML = '';  // Clear existing options
+    
+        // Only display options that match remaining recipes and aren't selected
+        const unselectedItems = items.filter(item => !selectedTags.includes(item));
+    
+        // Rebuild the dropdown with valid and unselected items
+        unselectedItems.forEach(item => {
             const option = document.createElement('li');
             option.textContent = item;
             option.classList.add('dropdown-item');
@@ -115,12 +119,29 @@ document.addEventListener('DOMContentLoaded', () => {
             tagElement.innerHTML = `<span>${tagText}</span><button>x</button>`;
             
             tagElement.querySelector('button').addEventListener('click', () => removeTag(tagText, tagElement, selector));
-
+    
             // Append the tag to the tag container
-            tagContainerUnified.appendChild(tagElement);  
-
-            // Update dropdown options and recipes after adding the tag
+            tagContainerUnified.appendChild(tagElement);
+    
+            // Remove the selected tag from the dropdown immediately
+            removeOptionFromDropdown(tagText, selector);
+    
+            // Update recipes after adding the tag
             filterRecipesByTags();
+        }
+    }
+
+     // Function to remove an option from the dropdown
+     function removeOptionFromDropdown(tagText, selector) {
+        const dropdownContainer = document.querySelector(selector);
+        const options = Array.from(dropdownContainer.children);
+    
+        const optionToRemove = options.find(option => option.textContent.trim() === tagText.trim());
+        if (optionToRemove) {
+            console.log(`Removing option: ${optionToRemove.textContent}`);
+            dropdownContainer.removeChild(optionToRemove);  // Remove the option from the dropdown
+        } else {
+            console.log(`Option not found: ${tagText}`);
         }
     }
 
@@ -128,16 +149,27 @@ document.addEventListener('DOMContentLoaded', () => {
     function removeTag(tagText, tagElement, selector) {
         selectedTags = selectedTags.filter(tag => tag !== tagText);
         tagContainerUnified.removeChild(tagElement);  // Remove from the unified container
+    
+        // Re-add the tag back to the dropdown
+        addOptionToDropdown(tagText, selector);
+    
+        filterRecipesByTags();  // Update recipes
+    }
 
-        // Add the tag back to the dropdown options
-        const currentOptions = Array.from(document.querySelector(selector).children).map(li => li.textContent);
-        updateFilterOptions(selector, [...currentOptions, tagText]);
-
-        filterRecipesByTags(); // Update filtered recipes by tags
+    // Function to add an option back to the dropdown
+    function addOptionToDropdown(tagText, selector) {
+        const dropdownContainer = document.querySelector(selector);
+        const option = document.createElement('li');
+        option.textContent = tagText;
+        option.classList.add('dropdown-item');
+        option.addEventListener('click', () => addTag(tagText, selector));
+    
+        dropdownContainer.appendChild(option);  // Add the option back to the dropdown
     }
 
     // Filter recipes based on selected tags
     function filterRecipesByTags() {
+        // Filter recipes by selected tags
         filteredRecipes = recipes.filter(recipe => {
             return selectedTags.every(tag => {
                 const matchIngredient = recipe.ingredients.some(ingredient => ingredient.ingredient.toLowerCase().includes(tag.toLowerCase()));
@@ -147,13 +179,13 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     
-        // After filtering recipes, update the available tags
+        // Update the dropdown to remove options that don't correspond to filtered recipes
         updateAdvancedFilters(filteredRecipes);
     
+        // Update the recipe count and display the filtered recipes
         document.querySelector('.recipe-count-number').textContent = `${filteredRecipes.length} recettes`;
-        updateUI(filteredRecipes); // Display filtered recipes
+        updateUI(filteredRecipes);  // Display filtered recipes
     }
-    
 
     // Update the UI with the filtered recipes
     function updateUI(recipesToShow) {
