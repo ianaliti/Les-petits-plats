@@ -33,15 +33,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const recipesContainer = document.querySelector('.recipes-container');
     const tagContainerUnified = document.querySelector('.tag-container-unified');  // Unified tag container
     const searchBar = document.querySelector('.search-bar');
+    const errorContainer = document.createElement('div'); 
+    errorContainer.classList.add('no-results-message'); 
+    recipesContainer.parentElement.appendChild(errorContainer); 
+
 
     const ingredientSearchInput = document.querySelector('.ingredient-search-input');
     const applianceSearchInput = document.querySelector('.appliance-search-input');
     const utensilSearchInput = document.querySelector('.utensil-search-input');
+    const recipesCount = document.querySelector('.recipe-count-number')
 
     const recipeCardFactory = new RecipeCardFactory();
     let selectedTags = [];
     let filteredRecipes = [...recipes]; 
-    document.querySelector('.recipe-count-number').textContent = `${filteredRecipes.length} recettes`;
+    recipesCount.textContent = `${filteredRecipes.length} recettes`;
 
     // Ensure the tag container exists in the DOM
     if (!tagContainerUnified) {
@@ -58,11 +63,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 const matchIngredients = recipe.ingredients.some(ingredient => ingredient.ingredient.toLowerCase().includes(query.toLowerCase()));
                 return matchTitle || matchDescription || matchIngredients;
             });
+            
+            if (filteredRecipes.length === 0) {
+                displayNoResultsMessage(query);
+            } else {
+                errorContainer.innerHTML = '';
+            }
         } else {
             filteredRecipes = [...recipes]; // Reset to all recipes if the query is less than 3 characters
+            errorContainer.innerHTML = '';
         }
         updateUI(filteredRecipes);
         updateAdvancedFilters(filteredRecipes);
+        recipesCount.textContent = `${filteredRecipes.length} recettes`;
+    }
+
+    // Function to display no results message
+    function displayNoResultsMessage(query) {
+        errorContainer.innerHTML = `
+            <p>Aucune recette ne contient '${query}'. Vous pouvez chercher des termes comme « tarte aux pommes », « poisson », etc.</p>
+        `;
     }
 
     // Function to update the ingredients, appliances, and utensils based on filtered recipes
@@ -139,10 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
         const optionToRemove = options.find(option => option.textContent.trim() === tagText.trim());
         if (optionToRemove) {
-            console.log(`Removing option: ${optionToRemove.textContent}`);
             dropdownContainer.removeChild(optionToRemove);  // Remove the option from the dropdown
-        } else {
-            console.log(`Option not found: ${tagText}`);
         }
     }
 
@@ -184,7 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateAdvancedFilters(filteredRecipes);
     
         // Update the recipe count and display the filtered recipes
-        document.querySelector('.recipe-count-number').textContent = `${filteredRecipes.length} recettes`;
+        recipesCount.textContent = `${filteredRecipes.length} recettes`;
         updateUI(filteredRecipes);  // Display filtered recipes
     }
 
