@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&display=swap');
 
 body {
     font-family: Arial, sans-serif;
@@ -44,8 +45,9 @@ body {
 /* Custom Search Bar */
 .search-bar {
     border-radius: 50px 0 0 50px; 
-    height: 50px; /
+    height: 50px; 
     font-size: 1.1rem;
+    font-family: 'Manrope', sans-serif;
 }
 
 .search-btn {
@@ -87,6 +89,7 @@ body {
     height: 60px;
     width: 180px;
     border-radius: 11px;
+    font-family: 'Manrope', sans-serif;
 }
 
 .filters .dropdown {
@@ -98,6 +101,7 @@ body {
     font-size: 1.5rem;
     font-weight: bold;
     color: #333;
+    font-family: 'Anton', sans-serif;
 }
 
 /* Tag container (for all tags under the filters) */
@@ -188,12 +192,15 @@ body {
     top: 15px;
     justify-content: center;
     align-items: center;
+    font-family: 'Manrope', sans-serif;
+    font-size: 12px;
 }
 
 .card-title {
     font-family: 'Anton', sans-serif;
     font-size: 18px;
     font-weight: 400;
+    margin: 32px 0;;
 }
 
 .card-recipes {
@@ -203,11 +210,16 @@ body {
     letter-spacing: 1px;
     color: #9b9b9b;
     margin-top: 20px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
 }
 
 .card-text {
     font-size: 0.9rem;
     margin-top: 5px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 14px;
 }
 
 /* Ingredients Section */
@@ -217,11 +229,12 @@ body {
 
 .ingredients-title {
     text-transform: uppercase;
-    font-size: 0.85rem;
-    font-weight: bold;
     letter-spacing: 1px;
     color: #9b9b9b;
     margin-bottom: 10px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
 }
 
 .ingredients-grid {
@@ -237,10 +250,16 @@ body {
 
 .ingredient-name {
     font-weight: 500;
+    font-family: 'Manrope', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
 }
 
 .ingredient-quantity {
     color: #9b9b9b;
+    font-family: 'Manrope', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
 }
 
 /* Adjust the margin between cards */
