@@ -118,6 +118,10 @@ body {
     background-color: transparent;
     border: none;
     padding: 0;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .input-group {
@@ -138,6 +142,10 @@ body {
 .ingredient-item:hover {
     background-color: #FFD15B; 
     color: black;
+}
+
+.ingredient-search-input, .appliance-search-input, .utensil-search-input {
+    padding-right: 40px; /* Add enough space for the search icon */
 }
 
 .recipe-count {
