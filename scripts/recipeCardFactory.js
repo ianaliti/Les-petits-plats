@@ -1,7 +1,7 @@
 class RecipeCardFactory {
     createRecipeCard(recipe) {
         const recipeCard = document.createElement('div');
-        recipeCard.classList.add('col-sm-12', 'col-md-6', 'col-lg-4', 'mb-4');  // Ensure it fits 3 per row
+        recipeCard.classList.add('col-sm-12', 'col-md-6', 'col-lg-4', 'mb-4');
 
         recipeCard.innerHTML = `
             <div class="card recipe-card">

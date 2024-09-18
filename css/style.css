@@ -192,6 +192,17 @@ body {
     overflow-y: auto;
     padding: 10px;
 }
+.dropdown-item {
+    cursor: pointer;
+}
+
+.show {
+    display: block;  
+}
+
+.dropdown-item:hover {
+    background-color: #FFD15B;
+}
 
 .dropdown-menu li {
     list-style: none;
