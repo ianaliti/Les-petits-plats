@@ -5,7 +5,7 @@ class RecipeCardFactory {
 
         recipeCard.innerHTML = `
             <div class="card recipe-card">
-                <img src="./assets/images/recipes/${recipe.image}" class="card-img-top" alt="${recipe.name}">
+                <img src="./assets/images/recipes/${recipe.image}" class="card-img-top" alt="${recipe.name} loading="lazy"">
                 <p class="card-time">${recipe.time} min</p>
                 <div class="card-body">
                     <h5 class="card-title">${recipe.name}</h5>
