@@ -1,8 +1,11 @@
+// Class for creating recipe cards dynamically
 class RecipeCardFactory {
     createRecipeCard(recipe) {
+        // Create a new div element for each recipe card
         const recipeCard = document.createElement('div');
         recipeCard.classList.add('col-sm-12', 'col-md-6', 'col-lg-4', 'mb-4');
 
+         // Populate the recipe card with recipe details (image, title, description, ingredients)
         recipeCard.innerHTML = `
             <div class="card recipe-card">
                 <img src="./assets/images/recipes/${recipe.image}" class="card-img-top" alt="${recipe.name} loading="lazy"">

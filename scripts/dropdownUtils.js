@@ -1,4 +1,3 @@
-// File: dropdownUtils.js
 export function filterDropdownOptions(inputElement, selector, items, updateFilterOptions) {
     const searchValue = inputElement.value.toLowerCase();
 
@@ -16,6 +15,6 @@ export function filterDropdownOptions(inputElement, selector, items, updateFilte
     const capitalizedItems = filteredItems.map(item => 
         item.charAt(0).toUpperCase() + item.slice(1).toLowerCase()
     );
-    
+
     updateFilterOptions(selector, capitalizedItems);
 }
