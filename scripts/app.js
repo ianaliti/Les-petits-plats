@@ -1,5 +1,3 @@
-// app.js
-
 import RecipeCardFactory from './RecipeCardFactory.js';
 import { searchRecipes } from './searchUtils.js';
 import { updateAdvancedFilters, updateFilterOptions, filterRecipesByTags } from './filterUtils.js';
