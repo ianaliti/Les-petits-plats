@@ -5,7 +5,9 @@ export function searchRecipes(query, recipes) {
         return recipes.filter(recipe => {
             const matchTitle = recipe.name.toLowerCase().includes(query.toLowerCase());
             const matchDescription = recipe.description.toLowerCase().includes(query.toLowerCase());
-            const matchIngredients = recipe.ingredients.some(ingredient => ingredient.ingredient.toLowerCase().includes(query.toLowerCase()));
+            const matchIngredients = recipe.ingredients.some(ingredient =>
+                ingredient.ingredient.toLowerCase().includes(query.toLowerCase()
+                ));
             return matchTitle || matchDescription || matchIngredients;
         });
     }
