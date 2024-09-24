@@ -5,35 +5,18 @@ Les Petits Plats is a recipe search and filter web application that allows users
 
 The project is built using vanilla JavaScript, HTML, CSS, and Bootstrap for styling, with a modular structure for easy maintenance and scalability.
 
-Features
-🔍 Search Recipes: Search by recipe name, description, or ingredients using the search bar.
-📝 Filter Recipes: Filter recipes based on ingredients, appliances, and utensils via dropdown menus.
-🏷️ Tag Management: Add and remove tags for filtering recipes dynamically.
-📱 Responsive Design: Built with Bootstrap for mobile-friendly usage.
-⚡ Dynamic Recipe Display: Recipes are rendered dynamically based on user input and filters.
+Features <ul>
+<li>🔍 Search Recipes: Search by recipe name, description, or ingredients using the search bar.</li>
+<li>📝 Filter Recipes: Filter recipes based on ingredients, appliances, and utensils via dropdown menus.</li>
+<li>🏷️ Tag Management: Add and remove tags for filtering recipes dynamically.</li>
+<li>📱 Responsive Design: Built with Bootstrap for mobile-friendly usage.</li>
+<li>⚡ Dynamic Recipe Display: Recipes are rendered dynamically based on user input and filters.</li>
+
 Technologies
 This project uses the following technologies:
 
 <ul> <li><b>HTML5</b>: For the structure of the web page.</li> <li><b>CSS3</b>: Custom styles along with Bootstrap for responsive design.</li> <li><b>JavaScript (ES6 Modules)</b>: Handles logic for filtering, searching, and rendering UI components.</li> <li><b>Bootstrap 5.3</b>: For responsive design and built-in components.</li> <li><b>Google Fonts</b>: For custom fonts.</li> </ul>
-Installation
-To get a local copy up and running, follow these simple steps:
 
-1. Clone the repository
-bash
-Copy code
-git clone https://github.com/your-username/les-petits-plats.git
-2. Navigate into the project directory
-bash
-Copy code
-cd les-petits-plats
-3. Open index.html in your browser
-Simply open the index.html file in your browser to start using the application.
-
-Alternatively, you can serve the project locally using a simple server:
-
-bash
-Copy code
-npx live-server
 Usage
 Search for recipes: Use the search bar to find recipes by typing in a keyword. The app will display relevant recipes matching the title, description, or ingredients.
 
