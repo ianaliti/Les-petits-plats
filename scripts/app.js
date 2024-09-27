@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchBar = document.querySelector('.search-bar');
     const errorContainer = document.createElement('div');
     errorContainer.classList.add('no-results-message');
+
     recipesContainer.parentElement.appendChild(errorContainer);
 
     const ingredientSearchInput = document.querySelector('.ingredient-search-input');
@@ -54,6 +55,9 @@ document.addEventListener('DOMContentLoaded', () => {
             (text, sel) => addOptionToDropdown(text, sel, handleAddTag), updateFilters);
         // Immediately update the dropdowns after removing a tag
         updateAdvancedFilters(filteredRecipes, selectedTags, handleAddTag);
+
+        // Show the updated list of recipes after removing the tag
+        updateFilters()
     }
 
     // Listen for input in the search bar and filter recipes based on the search query

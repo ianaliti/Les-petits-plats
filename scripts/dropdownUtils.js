@@ -1,6 +1,5 @@
 export function filterDropdownOptions(inputElement, selector, items, updateFilterOptions) {
     const searchValue = inputElement.value.toLowerCase();
-
     const uniqueItems = new Set();
 
     // Normalize items to lowercase and add to Set for uniqueness
