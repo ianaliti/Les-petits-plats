@@ -38,8 +38,13 @@ document.addEventListener('DOMContentLoaded', () => {
         // First, filter recipes by tags
         let filteredByTags = filterRecipesByTags(recipes, selectedTags);
 
-        // Then, filter recipes by the current search query
-        filteredRecipes = searchRecipes(currentSearchQuery.trim(), filteredByTags);
+        // If the search query is empty, don't apply any search filtering, only tag filtering
+        if (currentSearchQuery.length === 0) {
+            filteredRecipes = filteredByTags; // Show all recipes filtered by tags
+        } else {
+            // Apply the search query to the tag-filtered recipes
+            filteredRecipes = searchRecipes(currentSearchQuery.trim(), filteredByTags);
+        }
 
         // If no recipes match both the tags and the search query, show an error message
         if (filteredRecipes.length === 0) {
@@ -47,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             errorContainer.innerHTML = ''
         }
-        
+
         // Update the UI with the filtered recipes
         updateUI(filteredRecipes, recipesContainer, recipeCardFactory);
 
@@ -79,6 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Only update filters if the query is not just spaces or empty
         if (currentSearchQuery.length === 0 || event.inputType === "insertText" && event.data === " ") {
+            updateFilters()
             return; // Do nothing if the query is only spaces
         }
 
