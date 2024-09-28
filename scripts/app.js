@@ -41,6 +41,13 @@ document.addEventListener('DOMContentLoaded', () => {
         // Then, filter recipes by the current search query
         filteredRecipes = searchRecipes(currentSearchQuery.trim(), filteredByTags);
 
+        // If no recipes match both the tags and the search query, show an error message
+        if (filteredRecipes.length === 0) {
+            displayNoResultsMessage(currentSearchQuery, errorContainer)
+        } else {
+            errorContainer.innerHTML = ''
+        }
+        
         // Update the UI with the filtered recipes
         updateUI(filteredRecipes, recipesContainer, recipeCardFactory);
 
