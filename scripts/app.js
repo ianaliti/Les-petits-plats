@@ -6,6 +6,10 @@ import { updateUI, displayNoResultsMessage, updateRecipeCount } from './uiUtils.
 import { filterDropdownOptions } from './dropdownUtils.js';
 import { recipes } from '../data/recipes.js';
 
+let currentSearchQuery = '';  // To keep track of the current search query
+let selectedTags = [];  // To keep track of selected tags
+let filteredRecipes = [...recipes];  // Initially, all recipes are shown
+
 // Event listener for when the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
     const recipesContainer = document.querySelector('.recipes-container');
@@ -21,13 +25,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const utensilSearchInput = document.querySelector('.utensil-search-input');
     const recipesCount = document.querySelector('.recipe-count-number');
 
-    // Create instance of RecipeCardFactory for rendering recipes
     const recipeCardFactory = new RecipeCardFactory();
-    let selectedTags = [];
-    let filteredRecipes = [...recipes];
     updateRecipeCount(filteredRecipes.length, recipesCount);
 
-     // Ensure the tag container exists
     if (!tagContainerUnified) {
         console.error('Tag container not found! Please ensure it exists in the DOM.');
         return;
@@ -35,16 +35,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to update filters and refresh the displayed recipes
     function updateFilters() {
-        filteredRecipes = filterRecipesByTags(recipes, selectedTags);
+        // First, filter recipes by tags
+        let filteredByTags = filterRecipesByTags(recipes, selectedTags);
+
+        // Then, filter recipes by the current search query
+        filteredRecipes = searchRecipes(currentSearchQuery.trim(), filteredByTags);
+
+        // Update the UI with the filtered recipes
         updateUI(filteredRecipes, recipesContainer, recipeCardFactory);
+
+        // Update the dropdowns with available options based on the filtered recipes
         updateAdvancedFilters(filteredRecipes, selectedTags, handleAddTag);
+
+        // Update the recipe count
         updateRecipeCount(filteredRecipes.length, recipesCount);
     }
 
     // Add tag and update filters when a new tag is selected
     function handleAddTag(tagText, selector) {
         if (addTag(tagText, selector, selectedTags, tagContainerUnified, handleRemoveTag, updateFilters)) {
-            // Immediately update the dropdowns after adding a tag
             updateAdvancedFilters(filteredRecipes, selectedTags, handleAddTag);
         }
     }
@@ -53,29 +62,20 @@ document.addEventListener('DOMContentLoaded', () => {
     function handleRemoveTag(tagText, tagElement, selector) {
         selectedTags = removeTag(tagText, tagElement, selector, selectedTags, tagContainerUnified,
             (text, sel) => addOptionToDropdown(text, sel, handleAddTag), updateFilters);
-        // Immediately update the dropdowns after removing a tag
         updateAdvancedFilters(filteredRecipes, selectedTags, handleAddTag);
-
-        // Show the updated list of recipes after removing the tag
-        updateFilters()
+        updateFilters();
     }
 
     // Listen for input in the search bar and filter recipes based on the search query
     searchBar.addEventListener('input', (event) => {
-        const query = event.target.value;
-        filteredRecipes = searchRecipes(query, recipes);
+        currentSearchQuery = event.target.value.trim();  // Trim the input to ignore leading/trailing spaces
 
-
-        // If no recipes match the query, display an error message
-        if (filteredRecipes.length === 0 && query.length >= 3) {
-            displayNoResultsMessage(query, errorContainer);
-        } else {
-            errorContainer.innerHTML = ''; // Clear error message if there are results
+        // Only update filters if the query is not just spaces or empty
+        if (currentSearchQuery.length === 0 || event.inputType === "insertText" && event.data === " ") {
+            return; // Do nothing if the query is only spaces
         }
 
-        updateUI(filteredRecipes, recipesContainer, recipeCardFactory); // Update UI with filtered recipes
-        updateAdvancedFilters(filteredRecipes, selectedTags, handleAddTag); // Update dropdown options
-        updateRecipeCount(filteredRecipes.length, recipesCount); // Update recipe count
+        updateFilters();  // Reapply both the search and tag filtering
     });
 
     // Listen for input in the ingredient search field and filter dropdown options
